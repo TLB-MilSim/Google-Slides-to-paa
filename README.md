@@ -10,6 +10,10 @@ Paste the share link, pick the mission's `intel` folder, press the button. It do
 every slide, names them `in1.png`, `in2.png`, …, resizes them to a power-of-two texture
 size and runs them through the Arma 3 Tools converter.
 
+<p align="center">
+  <img src="assets/screenshot.png" alt="The TLB Intel Maker window" width="760">
+</p>
+
 ## Install
 
 ### The easy way — no Python needed
