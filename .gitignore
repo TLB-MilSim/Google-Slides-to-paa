@@ -1,0 +1,11 @@
+# Local configuration - contains machine-specific paths and recent links
+settings.json
+
+# Python
+__pycache__/
+*.py[cod]
+
+# Generated output
+*.paa
+*.png
+*.pdf
