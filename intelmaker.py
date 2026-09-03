@@ -24,6 +24,9 @@ from pathlib import Path
 
 APP_DIR = Path(__file__).resolve().parent
 SETTINGS_FILE = APP_DIR / "settings.json"
+ASSET_DIR = APP_DIR / "assets"
+ICON_FILE = ASSET_DIR / "icon.ico"
+LOGO_FILE = ASSET_DIR / "logo_64.png"
 
 # ImageToPAA refuses anything that is not a power of two, so resizing is not optional.
 MIN_POT, MAX_POT = 4, 8192
@@ -412,8 +415,15 @@ def main_gui() -> int:
     s = Settings.load()
     root = tk.Tk()
     root.title("IntelMaker - Google Slides to Arma 3 .paa")
-    root.geometry("860x640")
-    root.minsize(760, 580)
+    root.geometry("860x700")
+    root.minsize(760, 620)
+
+    # Window and taskbar icon. Both are cosmetic, so never let them break startup.
+    if ICON_FILE.exists():
+        try:
+            root.iconbitmap(default=str(ICON_FILE))
+        except Exception:
+            pass
 
     msgs = queue.Queue()
     running = tk.BooleanVar(value=False)
@@ -423,6 +433,29 @@ def main_gui() -> int:
     main.pack(fill="both", expand=True)
     main.columnconfigure(1, weight=1)
     row = 0
+
+    # --- header -----------------------------------------------------------
+    header = ttk.Frame(main)
+    header.grid(row=row, column=0, columnspan=3, sticky="ew", pady=(0, 10))
+    row += 1
+
+    if LOGO_FILE.exists():
+        try:
+            # Kept on root so Tk does not garbage collect the image.
+            root.logo_img = tk.PhotoImage(file=str(LOGO_FILE))
+            ttk.Label(header, image=root.logo_img).grid(row=0, column=0, rowspan=2,
+                                                        padx=(0, 12))
+        except Exception:
+            pass
+
+    ttk.Label(header, text="IntelMaker", font=("Segoe UI", 16, "bold")).grid(
+        row=0, column=1, sticky="sw")
+    ttk.Label(header, text="Google Slides to Arma 3 .paa briefing images",
+              foreground="#666").grid(row=1, column=1, sticky="nw")
+
+    ttk.Separator(main, orient="horizontal").grid(row=row, column=0, columnspan=3,
+                                                  sticky="ew", pady=(0, 10))
+    row += 1
 
     # --- source -----------------------------------------------------------
     ttk.Label(main, text="Presentation link", font=("", 9, "bold")).grid(

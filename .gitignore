@@ -9,3 +9,6 @@ __pycache__/
 *.paa
 *.png
 *.pdf
+
+# ...but the logo assets belong in the repo
+!assets/*.png

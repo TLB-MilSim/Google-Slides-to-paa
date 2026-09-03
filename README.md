@@ -1,4 +1,8 @@
-# IntelMaker
+<p align="center">
+  <img src="assets/logo.png" alt="IntelMaker" width="180">
+</p>
+
+<h1 align="center">IntelMaker</h1>
 
 Google Presentation → `in1.paa`, `in2.paa`, `in3.paa` … straight into a mission folder.
 
