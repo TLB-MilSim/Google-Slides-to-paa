@@ -11,11 +11,15 @@ echo.
 set "SCRIPTARG="
 
 rem A standalone build sitting next to this script needs no Python at all.
-if exist "%~dp0TLB Intel Maker.exe" (
-    echo Found TLB Intel Maker.exe - no Python needed.
-    set "TARGET=%~dp0TLB Intel Maker.exe"
-    set "ICON=%~dp0TLB Intel Maker.exe"
-    goto shortcuts
+rem GitHub replaces spaces with dots in release asset names, so anyone who
+rem downloaded the bare .exe will have "TLB.Intel.Maker.exe" instead.
+for %%N in ("TLB Intel Maker.exe" "TLB.Intel.Maker.exe") do (
+    if exist "%~dp0%%~N" (
+        echo Found %%~N - no Python needed.
+        set "TARGET=%~dp0%%~N"
+        set "ICON=%~dp0%%~N"
+        goto shortcuts
+    )
 )
 
 echo No TLB Intel Maker.exe here, so setting up to run from source.
