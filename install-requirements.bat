@@ -1,5 +1,5 @@
 @echo off
-rem One-time setup: installs the Python packages IntelMaker needs.
+rem One-time setup: installs the Python packages TLB Intel Maker needs.
 rem Uses the same interpreter the launchers use, so the packages land in the right place.
 cd /d "%~dp0"
 where python >nul 2>&1 || (

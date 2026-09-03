@@ -1,5 +1,5 @@
 """PyInstaller entry point for the windowed GUI executable."""
 import sys
-import intelmaker
+import tlbintelmaker
 
-sys.exit(intelmaker.main_gui())
+sys.exit(tlbintelmaker.main_gui())

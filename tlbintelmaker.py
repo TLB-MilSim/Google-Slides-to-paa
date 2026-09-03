@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-IntelMaker - Google Slides -> Arma 3 .paa intel images.
+TLB Intel Maker - Google Slides -> Arma 3 .paa intel images.
 
 Downloads a Google Presentation, renders every slide to PNG, names them
 in1.png, in2.png, ... and converts them to .paa with the Arma 3 Tools.
 
 Usage:
-    python intelmaker.py                       # open the GUI
-    python intelmaker.py <slides-url> <folder> # one-shot from the command line
+    python tlbintelmaker.py                       # open the GUI
+    python tlbintelmaker.py <slides-url> <folder> # one-shot from the command line
 """
 
 from __future__ import annotations
@@ -210,10 +210,10 @@ def require(module: str):
         if FROZEN:
             raise RuntimeError(
                 "This build is missing the '%s' component and is broken.\n"
-                "Please download IntelMaker again from the Releases page." % module)
+                "Please download TLB Intel Maker again from the Releases page." % module)
         raise RuntimeError(
             "The Python package '%s' is missing.\n"
-            "Run install-requirements.bat in the IntelMaker folder." % module)
+            "Run install-requirements.bat in the TLB Intel Maker folder." % module)
 
 
 def download_pdf(pres_id: str, log=print) -> bytes:
@@ -222,7 +222,7 @@ def download_pdf(pres_id: str, log=print) -> bytes:
     url = "https://docs.google.com/presentation/d/" + pres_id + "/export/pdf"
     log("Downloading " + url)
     r = requests.get(url, timeout=120, allow_redirects=True,
-                     headers={"User-Agent": "Mozilla/5.0 IntelMaker"})
+                     headers={"User-Agent": "Mozilla/5.0 TLB Intel Maker"})
     ctype = r.headers.get("content-type", "")
     if r.status_code != 200 or "pdf" not in ctype.lower():
         if r.status_code in (401, 403) or "text/html" in ctype.lower():
@@ -365,14 +365,14 @@ def run_job(url: str, out_folder: str, s: Settings, log=print) -> list:
 def main_cli(argv: list) -> int:
     s = Settings.load()
     ap = argparse.ArgumentParser(
-        prog="intelmaker",
+        prog="intel",
         description="Download a Google Presentation and convert every slide to Arma 3 .paa.",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=("examples:\n"
-                "  intelmaker.py --gui\n"
-                '  intelmaker.py "https://docs.google.com/presentation/d/ID/edit" '
+                "  intel --gui\n"
+                '  intel "https://docs.google.com/presentation/d/ID/edit" '
                 '"C:\\...\\images\\BR\\intel"\n'
-                "  intelmaker.py ID out\\folder --prefix in --start 1 --size 2048 --keep-png\n"))
+                "  intel ID out\\folder --prefix in --start 1 --size 2048 --keep-png\n"))
     ap.add_argument("url", nargs="?", help="Google Slides link or presentation ID")
     ap.add_argument("output", nargs="?", help="folder to put the .paa files in")
     ap.add_argument("--gui", action="store_true", help="open the graphical interface")
@@ -393,7 +393,7 @@ def main_cli(argv: list) -> int:
                     help="delete existing <prefix><n>.png/.paa in the target first")
     ap.add_argument("--save-settings", action="store_true",
                     help="store these options as the new defaults")
-    ap.add_argument("--version", action="version", version="IntelMaker " + __version__)
+    ap.add_argument("--version", action="version", version="TLB Intel Maker " + __version__)
     a = ap.parse_args(argv)
 
     if a.gui or not a.url:
@@ -432,7 +432,7 @@ def main_gui() -> int:
 
     s = Settings.load()
     root = tk.Tk()
-    root.title("IntelMaker - Google Slides to Arma 3 .paa")
+    root.title("TLB Intel Maker - Google Slides to Arma 3 .paa")
     root.geometry("860x700")
     root.minsize(760, 620)
 
@@ -466,7 +466,7 @@ def main_gui() -> int:
         except Exception:
             pass
 
-    ttk.Label(header, text="IntelMaker", font=("Segoe UI", 16, "bold")).grid(
+    ttk.Label(header, text="TLB Intel Maker", font=("Segoe UI", 16, "bold")).grid(
         row=0, column=1, sticky="sw")
     ttk.Label(header, text="Google Slides to Arma 3 .paa briefing images",
               foreground="#666").grid(row=1, column=1, sticky="nw")
@@ -647,7 +647,7 @@ def main_gui() -> int:
         if d.is_dir():
             os.startfile(str(d))
         else:
-            messagebox.showinfo("IntelMaker", "That folder does not exist yet.")
+            messagebox.showinfo("TLB Intel Maker", "That folder does not exist yet.")
 
     def worker(url, out, cfg):
         try:
@@ -665,17 +665,17 @@ def main_gui() -> int:
             extract_presentation_id(url)
             normalize_folder(out)
         except Exception as e:
-            messagebox.showerror("IntelMaker", str(e))
+            messagebox.showerror("TLB Intel Maker", str(e))
             return
         if not converter_exe(cfg.arma_tools, cfg.converter).exists():
-            messagebox.showerror("IntelMaker",
+            messagebox.showerror("TLB Intel Maker",
                                  "The Arma 3 Tools converter was not found.\n"
                                  "Set the correct 'Arma 3 Tools' folder below.")
             return
         if cfg.clean_target:
             d = normalize_folder(out)
             if d.is_dir() and not messagebox.askyesno(
-                    "IntelMaker",
+                    "TLB Intel Maker",
                     "Delete existing %s<number>.png / .paa files in\n%s\n\n"
                     "before writing the new ones?" % (cfg.prefix, d)):
                 return

@@ -1,5 +1,5 @@
 <#
-    Creates Desktop and Start Menu shortcuts for IntelMaker.
+    Creates Desktop and Start Menu shortcuts for TLB Intel Maker.
     Called by setup.bat; not meant to be run on its own.
 
     Pass -ScriptPath when launching from source; the argument string is built
@@ -17,8 +17,8 @@ $shell = New-Object -ComObject WScript.Shell
 $arguments = if ($ScriptPath) { '"{0}" --gui' -f $ScriptPath } else { "" }
 
 $places = @(
-    [IO.Path]::Combine([Environment]::GetFolderPath("Desktop"), "IntelMaker.lnk"),
-    [IO.Path]::Combine([Environment]::GetFolderPath("StartMenu"), "Programs", "IntelMaker.lnk")
+    [IO.Path]::Combine([Environment]::GetFolderPath("Desktop"), "TLB Intel Maker.lnk"),
+    [IO.Path]::Combine([Environment]::GetFolderPath("StartMenu"), "Programs", "TLB Intel Maker.lnk")
 )
 
 $made = 0

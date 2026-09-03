@@ -5,4 +5,4 @@ where python >nul 2>&1 || (
   echo Python was not found on PATH. Install it from https://www.python.org/downloads/
   exit /b 1
 )
-python "%~dp0intelmaker.py" %*
+python "%~dp0tlbintelmaker.py" %*

@@ -24,12 +24,12 @@ set COMMON=--noconfirm --clean --onefile ^
  --exclude-module matplotlib --exclude-module IPython --exclude-module pytest
 
 echo.
-echo Building IntelMaker.exe (GUI)...
-python -m PyInstaller %COMMON% --windowed --name IntelMaker packaging\IntelMaker.py || (pause & exit /b 1)
+echo Building TLB Intel Maker.exe (GUI)...
+python -m PyInstaller %COMMON% --windowed --name "TLB Intel Maker" packaging\gui_entry.py || (pause & exit /b 1)
 
 echo.
 echo Building intel.exe (command line)...
-python -m PyInstaller %COMMON% --console --name intel packaging\intel.py || (pause & exit /b 1)
+python -m PyInstaller %COMMON% --console --name intel packaging\cli_entry.py || (pause & exit /b 1)
 
 echo.
 echo Done:

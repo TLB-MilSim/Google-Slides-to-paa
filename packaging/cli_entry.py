@@ -1,5 +1,5 @@
 """PyInstaller entry point for the console CLI executable."""
 import sys
-import intelmaker
+import tlbintelmaker
 
-sys.exit(intelmaker.main_cli(sys.argv[1:]))
+sys.exit(tlbintelmaker.main_cli(sys.argv[1:]))

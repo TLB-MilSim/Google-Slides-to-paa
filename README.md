@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="assets/logo.png" alt="IntelMaker" width="180">
+  <img src="assets/logo.png" alt="TLB Intel Maker" width="180">
 </p>
 
-<h1 align="center">IntelMaker</h1>
+<h1 align="center">TLB Intel Maker</h1>
 
 Google Presentation → `in1.paa`, `in2.paa`, `in3.paa` … straight into a mission folder.
 
@@ -14,7 +14,7 @@ size and runs them through the Arma 3 Tools converter.
 
 ### The easy way — no Python needed
 
-Download **`IntelMaker.exe`** from the
+Download **`TLB Intel Maker.exe`** from the
 [Releases page](https://github.com/TLB-MilSim/Google-Slides-to-paa/releases) and run it.
 That is the entire install: Python and every library are bundled inside.
 
@@ -46,7 +46,7 @@ Settings (tools path, last folder, prefix, size, recent links) are remembered in
 | **Converter** | `ImageToPAA` (default) or `TexView2` (uses `Pal2PacE.exe`). |
 
 > **The presentation must be shared.** In Google Slides: *Share → General access → Anyone
-> with the link → Viewer*. Otherwise the download is refused and IntelMaker says so.
+> with the link → Viewer*. Otherwise the download is refused and TLB Intel Maker says so.
 
 ## Using the command line
 
@@ -64,19 +64,19 @@ Options:
 --pad-color #000   pad colour for pad mode    --save-settings     make these the new defaults
 ```
 
-Run `intel.bat --help` for the full list, or `IntelMaker.bat` for the GUI.
+Run `intel.bat --help` for the full list, or `TLB Intel Maker.bat` for the GUI.
 
 ## Two things worth knowing
 
 **Power-of-two is mandatory.** `ImageToPAA` rejects anything else outright
-(`Error (Img is not of power of 2 size)`), so IntelMaker always resizes. A 16:9 deck
+(`Error (Img is not of power of 2 size)`), so TLB Intel Maker always resizes. A 16:9 deck
 becomes 2048×1024, which Arma stretches back to 16:9 in the briefing — this is what most
 mission makers do. If you would rather keep exact proportions, pick **pad** and it
 letterboxes onto the power-of-two canvas instead.
 
 **Percent signs in paths are left alone.** Arma's *Other Profiles* folders are genuinely
 named `CPT%20W%2e%20Fosse` on disk, so a pasted path is used exactly as typed. Only if
-that literal path does not exist does IntelMaker try the URL-decoded version, for paths
+that literal path does not exist does TLB Intel Maker try the URL-decoded version, for paths
 copied out of a browser.
 
 ## Using them in a mission
@@ -85,7 +85,7 @@ copied out of a browser.
 player createDiaryRecord ["Diary", ["Intel", "<img image='images\BR\intel\in1.paa' width='600' height='300'/>"]];
 ```
 
-Re-run IntelMaker after editing the slides and the images update in place — the file names
+Re-run TLB Intel Maker after editing the slides and the images update in place — the file names
 stay the same, so nothing in the mission needs touching. Tick **Delete existing** if the
 deck got shorter, so stale high-numbered images do not linger.
 
@@ -103,7 +103,7 @@ deck got shorter, so stale high-numbered images do not linger.
 
 Maintainers only — users download the `.exe` from Releases.
 
-Run `build.bat`. It installs PyInstaller and produces `dist\IntelMaker.exe` (windowed)
+Run `build.bat`. It installs PyInstaller and produces `dist\TLB Intel Maker.exe` (windowed)
 and `dist\intel.exe` (console), each about 41 MB with everything bundled.
 
 Two flags in there are load-bearing. `requests`, `pymupdf` and `PIL` are imported
