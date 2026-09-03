@@ -12,3 +12,8 @@ __pycache__/
 
 # ...but the logo assets belong in the repo
 !assets/*.png
+
+# Build output
+dist/
+.build/
+*.spec

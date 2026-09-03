@@ -22,9 +22,17 @@ import urllib.parse
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 
-APP_DIR = Path(__file__).resolve().parent
+__version__ = "1.0.0"
+
+# Frozen by PyInstaller: read-only resources live in the temporary extraction
+# directory, but settings must sit next to the .exe where they persist.
+FROZEN = getattr(sys, "frozen", False)
+APP_DIR = (Path(sys.executable).resolve().parent if FROZEN
+           else Path(__file__).resolve().parent)
+RESOURCE_DIR = Path(getattr(sys, "_MEIPASS", APP_DIR))
+
 SETTINGS_FILE = APP_DIR / "settings.json"
-ASSET_DIR = APP_DIR / "assets"
+ASSET_DIR = RESOURCE_DIR / "assets"
 ICON_FILE = ASSET_DIR / "icon.ico"
 LOGO_FILE = ASSET_DIR / "logo_64.png"
 
@@ -190,10 +198,19 @@ def hex_to_rgb(value: str) -> tuple:
 # --------------------------------------------------------------------------- #
 
 def require(module: str):
-    """Imports a third-party module, or explains how to install it."""
+    """Imports a third-party module, or explains how to install it.
+
+    Note for packaging: because this import is dynamic, PyInstaller cannot see
+    it. build.bat passes the corresponding --hidden-import / --collect-all
+    flags; keep them in step with requirements.txt.
+    """
     try:
         return __import__(module)
     except ImportError:
+        if FROZEN:
+            raise RuntimeError(
+                "This build is missing the '%s' component and is broken.\n"
+                "Please download IntelMaker again from the Releases page." % module)
         raise RuntimeError(
             "The Python package '%s' is missing.\n"
             "Run install-requirements.bat in the IntelMaker folder." % module)
@@ -376,6 +393,7 @@ def main_cli(argv: list) -> int:
                     help="delete existing <prefix><n>.png/.paa in the target first")
     ap.add_argument("--save-settings", action="store_true",
                     help="store these options as the new defaults")
+    ap.add_argument("--version", action="version", version="IntelMaker " + __version__)
     a = ap.parse_args(argv)
 
     if a.gui or not a.url:
@@ -452,6 +470,9 @@ def main_gui() -> int:
         row=0, column=1, sticky="sw")
     ttk.Label(header, text="Google Slides to Arma 3 .paa briefing images",
               foreground="#666").grid(row=1, column=1, sticky="nw")
+    header.columnconfigure(2, weight=1)
+    ttk.Label(header, text="v" + __version__, foreground="#999").grid(
+        row=1, column=2, sticky="se")
 
     ttk.Separator(main, orient="horizontal").grid(row=row, column=0, columnspan=3,
                                                   sticky="ew", pady=(0, 10))

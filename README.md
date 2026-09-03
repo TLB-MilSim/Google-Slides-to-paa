@@ -10,15 +10,27 @@ Paste the share link, pick the mission's `intel` folder, press the button. It do
 every slide, names them `in1.png`, `in2.png`, …, resizes them to a power-of-two texture
 size and runs them through the Arma 3 Tools converter.
 
-## Setup (once)
+## Install
+
+### The easy way — no Python needed
+
+Download **`IntelMaker.exe`** from the
+[Releases page](https://github.com/TLB-MilSim/Google-Slides-to-paa/releases) and run it.
+That is the entire install: Python and every library are bundled inside.
+
+Put it in a folder of its own if you like, and run `setup.bat` next to it to get Desktop
+and Start Menu shortcuts. `intel.exe` in the same release is the command-line version.
+
+### From source
 
 1. Install Python 3 from [python.org](https://www.python.org/downloads/) (tick *Add Python to PATH*).
-2. Double-click **`install-requirements.bat`**.
-3. Double-click **`IntelMaker.bat`**. The Arma 3 Tools folder is auto-detected; if the line
-   under *Arma 3 Tools* is red, click **Browse…** and pick your `Arma 3 Tools` folder.
+2. Double-click **`setup.bat`** — it installs the packages and creates the shortcuts.
+
+Either way, the Arma 3 Tools folder is auto-detected on first run. If the line under
+*Arma 3 Tools* is red, click **Browse…** and pick your `Arma 3 Tools` folder.
 
 Settings (tools path, last folder, prefix, size, recent links) are remembered in
-`settings.json` next to the script.
+`settings.json`, next to the script or next to the `.exe`.
 
 ## Using the GUI
 
@@ -84,4 +96,19 @@ deck got shorter, so stale high-numbered images do not linger.
 | *Google refused the download* | Set sharing to "Anyone with the link". |
 | *Converter not found* | Point the Arma 3 Tools box at the folder containing `ImageToPAA\`. |
 | *Img is not of power of 2 size* | You set **Fit** to `none`. Use `stretch` or `pad`. |
-| `ModuleNotFoundError` | Run `install-requirements.bat`. |
+| `ModuleNotFoundError` | Run `setup.bat`, or use the `.exe` from Releases instead. |
+| Windows SmartScreen warning | The `.exe` is unsigned. *More info → Run anyway*. |
+
+## Building the executables
+
+Maintainers only — users download the `.exe` from Releases.
+
+Run `build.bat`. It installs PyInstaller and produces `dist\IntelMaker.exe` (windowed)
+and `dist\intel.exe` (console), each about 41 MB with everything bundled.
+
+Two flags in there are load-bearing. `requests`, `pymupdf` and `PIL` are imported
+dynamically by `require()` so PyInstaller cannot see them, hence the explicit
+`--hidden-import` for each; keep those in step with `requirements.txt`. The
+`--exclude-module` list drops PyMuPDF's optional table-extraction stack (scipy, pandas,
+numpy, sqlalchemy), which is unused here and otherwise takes the build from 41 MB to
+99 MB.
