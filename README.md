@@ -16,16 +16,16 @@ size and runs them through the Arma 3 Tools converter.
 
 ## What you can use it for
 
-Anything in Arma that displays an image. Write it as slides in Google Slides — where
-you already have templates, fonts, images and everyone editing the same deck — and pull
+Anything in Arma that displays an image. Write it as slides in Google Slides, where
+you already have templates, fonts, images and everyone editing the same deck. Then pull
 it straight into the mission as textures.
 
-- **Mission briefings** — diary records, orders, target packets
-- **Training slides** — a whole classroom deck, in-game
-- **ACE slideshows** — point the module's image list at the `.paa` files
-- **1TROOP slideshows** — same idea, same files
-- **Anything else** — loading screens, menu backgrounds, static images on a billboard,
-  or your own slide script
+- **Mission briefings**. Diary records, orders and target packets.
+- **Training slides**. A whole classroom deck, in-game.
+- **ACE slideshows**. Point the module's image list at the `.paa` files.
+- **1TROOP slideshows**. Same idea, same files.
+- **Anything else**. Loading screens, menu backgrounds, static images on a billboard,
+  or your own slide script.
 
 The tool has no opinion about what you do with the output. All it does is fetch each
 slide from Google and turn it into a `.paa`, named in order. Wiring those images into
@@ -36,8 +36,8 @@ a briefing, a module or a script is the same job it always was.
 This is the one thing worth doing before you write a single slide, and it takes ten
 seconds.
 
-Arma's engine requires texture dimensions that are **powers of two** — 512, 1024, 2048
-and so on. For briefing images and loading screens, **2048 × 1024** is the sweet spot,
+Arma's engine requires texture dimensions that are **powers of two**, such as 512,
+1024 or 2048. For briefing images and loading screens, **2048 × 1024** is the sweet spot,
 with **1024 × 512** for lighter missions. `ImageToPAA` refuses anything else outright,
 so TLB Intel Maker always resizes to fit; the question is only whether that resize
 distorts your slides.
@@ -48,7 +48,7 @@ enter `2048 × 1024`.
 What actually matters is the **aspect ratio**, not the exact pixel count, because the
 tool re-renders each slide at full resolution anyway. A 2048 × 1024 deck is 2:1, matches
 the texture exactly and comes through pixel-perfect. Leave it on the default 16:9 and
-your slides get squeezed about 11% vertically to reach 2:1 — Arma stretches them back
+your slides get squeezed about 11% vertically to reach 2:1. Arma stretches them back
 out in the briefing, so it usually passes unnoticed, but circles become ovals if you
 look closely. Set the page size up front and the problem never exists.
 
@@ -57,7 +57,7 @@ letterboxes the slide onto the power-of-two canvas with bars instead of stretchi
 
 ## Install
 
-### The easy way — no Python needed
+### The easy way, no Python needed
 
 Download **`TLB Intel Maker.exe`** from the
 [Releases page](https://github.com/TLB-MilSim/Google-Slides-to-paa/releases) and run it.
@@ -69,7 +69,7 @@ and Start Menu shortcuts. `intel.exe` in the same release is the command-line ve
 ### From source
 
 1. Install Python 3 from [python.org](https://www.python.org/downloads/) (tick *Add Python to PATH*).
-2. Double-click **`setup.bat`** — it installs the packages and creates the shortcuts.
+2. Double-click **`setup.bat`**. It installs the packages and creates the shortcuts.
 
 Either way, the Arma 3 Tools folder is auto-detected on first run. If the line under
 *Arma 3 Tools* is red, click **Browse…** and pick your `Arma 3 Tools` folder.
@@ -86,7 +86,7 @@ Settings (tools path, last folder, prefix, size, recent links) are remembered in
 | **Prefix / Start at** | `in` + `1` → `in1.paa`, `in2.paa`, … Change to `brief`/`0` if you like. |
 | **Long edge** | Texture size. `2048` is the sensible default; `1024` for lighter missions. |
 | **Fit** | `stretch` (default), `pad` (letterbox, keeps aspect), or `none`. |
-| **Keep the .png files as well** | Off by default — only the `.paa` files are left behind. |
+| **Keep the .png files as well** | Off by default. Only the `.paa` files are left behind. |
 | **Delete existing prefix+number files first** | Clears old `in1…inN` before writing. Asks for confirmation. |
 | **Converter** | `ImageToPAA` (default) or `TexView2` (uses `Pal2PacE.exe`). |
 
@@ -126,8 +126,8 @@ In a briefing:
 player createDiaryRecord ["Diary", ["Intel", "<img image='images\BR\intel\in1.paa' width='600' height='300'/>"]];
 ```
 
-For an ACE or 1TROOP slideshow, give the module the same paths in order —
-`images\BR\intel\in1.paa`, `in2.paa`, `in3.paa` — and the deck plays through as slides.
+For an ACE or 1TROOP slideshow, give the module the same files in order,
+`images\BR\intel\in1.paa`, `in2.paa`, `in3.paa`, and the deck plays through as slides.
 
 Re-run TLB Intel Maker after editing the presentation and the images update in place.
 The file names never change, so nothing in the mission has to be touched. Tick
@@ -145,7 +145,7 @@ The file names never change, so nothing in the mission has to be touched. Tick
 
 ## Building the executables
 
-Maintainers only — users download the `.exe` from Releases.
+Maintainers only. Users download the `.exe` from Releases.
 
 Run `build.bat`. It installs PyInstaller and produces `dist\TLB Intel Maker.exe` (windowed)
 and `dist\intel.exe` (console), each about 41 MB with everything bundled.
